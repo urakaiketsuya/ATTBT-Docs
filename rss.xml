@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog RSS Feed]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 28 Sep 2024 22:34:01 GMT</lastBuildDate><item><title><![CDATA[WBP_UnitHUD]]></title><description><![CDATA[WBP_UnitHUD Path: /Game/AdvancedTurnBasedTileToolkit/Core/Units/WBP_UnitHUD .. cpp:class:: WBP_UnitHUD : public UserWidget .. cpp:function…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/WBP_UnitHUD/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/WBP_UnitHUD/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;WBP_UnitHUD&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog RSS Feed]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 28 Sep 2024 22:48:34 GMT</lastBuildDate><item><title><![CDATA[WBP_UnitHUD]]></title><description><![CDATA[WBP_UnitHUD Path: /Game/AdvancedTurnBasedTileToolkit/Core/Units/WBP_UnitHUD .. cpp:class:: WBP_UnitHUD : public UserWidget .. cpp:function…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/WBP_UnitHUD/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/WBP_UnitHUD/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;WBP_UnitHUD&lt;/h1&gt;
 &lt;p&gt;Path: /Game/AdvancedTurnBasedTileToolkit/Core/Units/WBP_UnitHUD&lt;/p&gt;
 &lt;p&gt;.. cpp:class:: WBP_UnitHUD : public UserWidget&lt;/p&gt;
 &lt;p&gt;.. cpp:function:: void ChangeHudColor(exec then, LinearColor Color)&lt;/p&gt;
@@ -31789,4 +31789,792 @@ description: &quot; Barebones movement ability&quot;&lt;/h2&gt;
   :arg __WorldContext: 
   :type __WorldContext: Object
   :returns execute: 
-  :rtype execute: exec&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
+  :rtype execute: exec&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[ATTBT Basics #3 Walls]]></title><description><![CDATA[welcome back so now we're gonna look at
+how we can get the grid to generate
+edges and do the hard work for us so
+let's so these are all the…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/Basics_Walls/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/Basics_Walls/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;welcome back so now we&apos;re gonna look at
+how we can get the grid to generate
+edges and do the hard work for us so
+let&apos;s so these are all the tiles from
+the previous video and just get those
+deleted and then let&apos;s add just a
+regular cube so first let&apos;s add a cube
+and to the grid like this and I&apos;ll
+resize it a bit now this cube if we
+press play doesn&apos;t do anything you can
+see you can pass right through it
+because the grid has no way of knowing
+that it exists so we need to tell the
+grid to look for things like this cube
+that is simple enough to do if we select
+the grid manager and we scroll down to
+the config options here we will find
+this boolean here which you can check
+for trays for walls so if we check this
+we will see that we can now no longer
+move through this cube even though it&apos;s
+just a regular mesh with no special code
+attached to it we can see that you can
+also create you know thin walls or
+whatever shapes you want using this
+method it&apos;s great a thin wall like this
+and it will have the same sort of thing
+that you can now move around it and it
+blocks walkability so how does this work
+well it works by the grid manager at
+startup using a line trace tracing in
+every direction to the surrounding tiles
+and if that line trace is blocked then
+that edge will be removed we can see
+this if we go into the grid manager we
+edit the blueprint here now here is the
+activate grid manager event which is
+called from the game state at the
+beginning of the game and lots of stuff
+happens here which is covered in other
+videos
+let&apos;s set up no I mean set up grid
+arrays it&apos;s what we are interested in
+and here we have the generate grid edges
+event and here you have the one that
+adds the edges of the tiles and tile
+actor placed in the viewport to the grid
+by the way but this is the one that we
+are interested in now set edges based on
+terrain we have three different calls
+here based on and if we have a
+multi-level or one level grid or if we
+don&apos;t have any height differences though
+more about these two at a later point
+but first height map is set to false on
+our grid and so we add tile edges no
+height map and here is the trace so we
+can draw a debug persistent line trace
+for this so that I can visualize for you
+guys how this works
+so if we now hit play you will see that
+line traces go in every direction from
+each of these tiles and these places
+here you can see that these traces are
+blocked so you can see that the trace
+from this tile the center of this tile
+that the center of this tile is blocked
+by this mesh and thus this edge between
+these two and the edge going the other
+way are both removed we can see that if
+we resize this mesh slightly we can now
+move past it because these corner edges
+are no longer blocked by this line trace
+also note that we use a custom collision
+channel for this so if we go to one of
+our measures and we find its collision
+settings and and we can change this to
+custom and then it will find the wall
+trace channel here and if we ignore this
+channel for this mesh then we will see
+when starting the game that we can again
+move through and ignore this mesh
+entirely and so this means that anything
+that you place in the area of the grid
+that blocks the
+all tres collision channel if you have
+tres four walls enabled here tres four
+walls enabled and the World Trade Center
+you can also set up here if you want to
+use a different channel but if this is
+enabled whatever stuff you&apos;ve placed on
+the grid which blocks this channel here
+will then remove edges between the tiles
+and where it is placed
+you may notice that there are a couple
+of different trace channels defined
+within the grid manager we have the path
+traced channel and the arranged trace
+Channel and now the path trace that is
+used to define what parts of the grid
+can be walked on so anything needs to
+block path traced if units are should be
+able to walk on top of it well Range
+trace that is used during gameplay to
+determine a visibility for these units
+so if they can target other units with
+attacks or if they are blocked by meshes
+etc I can show this briefly with the
+unit here if we go back to this mesh we
+edit it and in the collision settings we
+can see that it blocks range trace and
+path trace which means that this mesh
+will be considered when generating
+walkability on the grid which tiles can
+be walked on since height maps are not
+enabled right now and all the tiles will
+be at the heart location zero but more
+on that later but for range trace this
+means that this mesh should block
+visibility now if we go here yeah first
+let&apos;s go to the grid manager and turn
+off this debug.trace so that doesn&apos;t
+bother us now if we select this unit and
+we increase its range to something
+higher like 12 and hit play we can see
+that it doesn&apos;t work right outside oh
+yeah it&apos;s too low so the height at which
+you can see tiles is defined within the
+abilities that you are using
+but yeah so we need to make this taller
+and if we now hit play we should be able
+to see that yeah we are blocking
+line-of-sight and that is based on where
+we are standing so lastly let&apos;s talk
+briefly about the path traced channel so
+that&apos;s the collision channel that
+defines what parts or what inside this
+grid can be moved on top of so by
+default the grid manager it blocks path
+trace for the entire grid and it doesn&apos;t
+do this with each of these individual
+tiles having collision enabled but
+instead it has one large plane that
+covers the entire grid manager no matter
+how large the grid manager is and so we
+can show this collision plane here but
+we can also then set this disable
+collision plane walkable now this will
+work a bit strangely now that height
+Maps is set to false but I will show
+this so we can see now that there let me
+turn off the collision plane
+visualization here so that&apos;s a bit more
+clear to see so we can see that we can
+still move to all of these places but
+we&apos;re not able to click here and that&apos;s
+because of these abilities they try to
+see if the collision trace channel or
+the path trace channel is blocked
+beneath the mouse so you can see that if
+we hover over these meshes that then the
+ability is able to find the tiles here
+but since this collision plane no longer
+blocks path trace our mouse is no longer
+able to find the grid but still all of
+these tiles are considered being part of
+the grid and thus path finding can be
+done of them on them this is when height
+map is been set to false which means
+that it&apos;s the grid manager considered
+the entire considers the entire grid to
+be walkable by default and it doesn&apos;t
+bother doing traces to type try to check
+if there are any tiles missing or
+something like that so if you want
+the grid manager to check if there are
+tiles missing we can set height mapped
+to one level and now if we click play we
+see that we can&apos;t move anywhere but we
+can then add another cube here which by
+default blocks path trace we can resize
+it and we can move this unit here so
+it&apos;s on top of it and now we can see
+that we&apos;re able to move on top of this
+mesh because it blocks path trace but
+yeah and this is bit of what is in the
+procedural height map features of this
+toolkit and that&apos;s what I will be
+talking about in the next video&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generated with &lt;a href=&quot;https://kome.ai&quot;&gt;https://kome.ai&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[ATTBT Basics #2 Tiles]]></title><description><![CDATA[hello in this video I'm gonna be talking
+about various ways of setting up your
+grid and customizing the grid
+so let's first get a grid…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/Basics_Tiles/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/Basics_Tiles/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;hello in this video I&apos;m gonna be talking
+about various ways of setting up your
+grid and customizing the grid
+so let&apos;s first get a grid manager down
+so we&apos;re here in core grid VP grid
+manager I&apos;m gonna place this at 0 and
+I&apos;m gonna increase size 12 or something
+like that why not and and let&apos;s place a
+unit so that we can walk around on the
+grid I&apos;m gonna use BB unit Adam and here
+we are okay so let&apos;s start by talking
+about tiles so tiles as I said in the
+last video you can find them in the
+tiles folder and in square you have some
+tiles set up to work with a square grid
+also as shown before placing a tile on
+the map will block pathfinding like so
+but how does this how is this set up
+exactly let me demonstrate with a few
+different kinds of tiles so we have this
+tile here which is called tile wall
+block and we have this which is just
+called wall and we have another one here
+which is called tile wall II for east
+and so if your different ones and you
+can see that they behave differently
+that were able to walk behind this thin
+wall here but that we have to move
+around it and for this one we see that
+we can move around it and for this one
+here it&apos;s similar it just that we can
+also cut through corners of this tile so
+how does this work well each tile hair
+on this grid are connected to its
+neighboring tiles through what are
+called edges I won&apos;t go into that in
+detail in this video I&apos;ll dive in depth
+in that in another video
+but what these tiles essentially do is
+that they look at these edges that each
+of these tiles have and it removes some
+edges based on the values that are
+defined within the edge cost variable of
+each tile which you can see is a bit
+different for each of these three tiles
+you can see the
+these edge costs they are named after
+the cardinal directions north east south
+west north east and cetera so these are
+referring to the axis on the grid
+manager so if you click the grid manager
+then in the x-axis that will be East and
+the y-axis will be south so if you look
+at the grid manager from this rotation
+then these naming conventions make sense
+so for this tile here we can see that it
+has an edge cost of zero in every
+direction what this means is at the star
+of the game this tile looks at the tile
+that it&apos;s placed on which is the tile
+here and below it and then it looks at
+each direction and it changes the edge
+cost that was there before with an edge
+cost of zero removing that edge from the
+grid actually that&apos;s not entirely
+precise it doesn&apos;t create an edge of
+zero it just removes that edge but what
+this means is that when pathfinding
+tries to enter this tile it finds that
+the edge costs here the edge does not
+exist so it cannot enter and the same if
+the unit starts within this tile and we
+start playing you can see that we can&apos;t
+move anywhere because all of the
+directions are blocked for the path
+finding of this unit we can also add
+tiles that have costs that are greater
+than one so if we add this to tile cost
+tile here it is set up like that by
+default so we can see here that it has a
+cost of two to enter this tile so if we
+hit play we see that the unit will want
+to avoid going into this tile but we can
+still move through it the amount of
+movement the unit has is defined within
+the unit by the way we then move here
+but I&apos;ll get more into how to customize
+units in the later tutorial so back to
+this tile so it has a cost of two if we
+just put all this back to one we can see
+that it treats it as
+regular tile we can make it greater or
+back to the same job it acts as a higher
+cost again there&apos;s one more setting
+remaining to discuss and that is if we
+choose one of these actors you can see
+here that they have edge costs of minus
+one what does that mean exactly well
+this is what is causing this tile here
+to block these corners so that you can&apos;t
+move around it or that you have to take
+a long route and can&apos;t cut through
+corners as you can with this tile here
+and so minus one is basically a special
+command that tells the toolkit at setup
+to look at the tile edges crossing the
+sides of this tile which are outside
+where the tile is actually placed at and
+then blocking off or changing the
+movement cost of those tiles if you want
+to create your own tile that&apos;s a pretty
+simple process and I can click here and
+then create a new blueprint after
+right-clicking I search for tile and
+here it is
+BBD a tile I will call this vpg a tile
+custom and by default it is immiscible
+we have no mesh but it can still affect
+pathfinding in the same way as any other
+tile as you will see so if I set this
+hair and I have increase the cost for
+all of these edges we can see that he
+avoids this it&apos;s like with this other
+tile here having invisible walls can be
+useful of course but we probably want to
+visualize this in some way so we go into
+this tile actor here and we can add a
+static mesh and we can choose from one
+of the static meshes that are included
+in the toolkit let&apos;s find one table like
+this crate hair which is works well for
+a and for a tile and now you will see
+that there will be one issue here that
+it does not snap to the grid currently
+but it will still lock the tile which it
+is placed on or change the edge cost of
+that so let&apos;s change the edge costs here
+to zero and we will see that it locks
+this and we can move around it and
+behind it but it is not centered on the
+tile so the way to make it Center on the
+tile and snap to the grid is to go into
+this and then attach it to the grid
+anchor which is a scene component that
+is used for the grid snapping
+functionality the grid snapping
+functionality is defined in the parent
+actor here so now we can see that it
+automatically snaps to the grid we can
+also make the location of this actor and
+the location of this mesh to be aligned
+by clicking this place accurate anchor
+button hearing we click away and click
+back we can see that they are centered
+we probably don&apos;t want to define the
+edges of a tile every time we place it
+of course you can change this in the
+defaults here of these tiles let&apos;s go to
+edge cost here and I&apos;m gonna put all of
+them to zero maybe I want to block the
+corners here so I&apos;ll put all of these
+two minus one there and now we can place
+more of these and they will work just
+like that so that&apos;s it for tiles so
+tiles are nice and all and they were the
+first method of manipulating and grid
+edges that I added to this toolkit over
+five years ago but I&apos;ve since added
+other methods also that are very useful
+it is possible to have the grid manager
+calculate edges based on the collision
+properties of meshes placed in the grid
+area and that is what I&apos;m going to show
+in the next video but that&apos;s it for this
+video on tiles&lt;/p&gt;</content:encoded></item><item><title><![CDATA[ATTBT Basics #1 Setup]]></title><description><![CDATA[hello and welcome I am Knut I will be
+creator of the advanced turn-based tile
+toolkit for Unreal Engine thanks for
+showing interest in this…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/Basics_Setup/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/Basics_Setup/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;hello and welcome I am Knut I will be
+creator of the advanced turn-based tile
+toolkit for Unreal Engine thanks for
+showing interest in this asset in the
+next few tutorials I will show you how
+to get the basics of this toolkit
+working in this first video I will show
+you how to get a basic map up and
+running so without further ado let&apos;s get
+started
+so first let&apos;s create a new level and we
+choose the default level and then we can
+just delete this mesh and player start
+and reflection capture we don&apos;t need
+those and then we want to add our grid
+so we go to core and grid and here you
+will find the grid manager which is the
+most important blueprint in this toolkit
+which holds all the functions for grid
+math and various grid operations and so
+we place this into our level I like to 0
+the location out it makes some math a
+bit simpler if you want to add your own
+features later on though you can put it
+anywhere but just if you have no other
+reason and just put it at 0 and then in
+the settings we can increase the size of
+this grid manager so if we click it you
+will see here we can change grid size so
+let&apos;s create a small but slightly bigger
+size scribbs we can do a 9 by 9 that
+looks fine
+the next let&apos;s add something to interact
+with the grid survey unit and then we go
+into this units folder and you can find
+BP unit annum here which is like a basic
+example of how to create a an animated
+unit that interacts with the grid we can
+place this anywhere you will see that it
+snaps to the grid automatically and now
+if we press play we can walk around on
+the grid and we can press Q and E to
+rotate consumed in and out by scrolling
+and pan with W a s and D and it is all
+working fine though this level is a bit
+boring not much to do except walk around
+so let&apos;s do something about that
+first let&apos;s add some obstacles we can
+find some wooden tiles and square since
+we&apos;re using a square grid and then we
+can place some of these tiles here these
+black walls three of those into our map
+and now if we press play we see that
+they block our movement so this is
+something but still not much to do for
+this guy so let&apos;s add an enemy we can
+take the guy we already got select him
+and all drag to create a copy now if we
+do that then he&apos;s a friendly unit so we
+can&apos;t attack him which was switched to
+him so to indicate that this guy is an
+enemy we can go into his settings here
+and we can change his faction and we
+change the faction to enemy and I also
+set him to be AI controlled so it
+doesn&apos;t have to be and then if we press
+play we can see that we can work and
+attack him and when it&apos;s his turn he
+will attack us we can move away and he&apos;s
+kind of chases and yeah so we got a very
+simple level going and I lost so those
+are the basics really if you wanted to
+use a hexagonal grid instead you can
+find that here as VP grid mentor hex
+only one grid per level though and and
+well another thing if you don&apos;t looking
+at identical units there&apos;s a handy debug
+unit and in units called VP unit and in
+debug which automatically gets its color
+and based on its faction variable and
+which automatically changes its
+animation blueprint based on its range
+so these are useful for debugging and
+testing out mechanics and so on though I
+wouldn&apos;t recommend having this as the
+base for the actual units in your game
+for how to set that sort of stuff up see
+my tutorial series on creating units
+that just about does it for this first
+video in the next video I will show you
+how to use tiles and
+other methods to create a more
+interesting map but that&apos;s it for now
+thanks for watching&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generated with &lt;a href=&quot;https://kome.ai&quot;&gt;https://kome.ai&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[ATTBT Basics #4 Height]]></title><description><![CDATA[hey everyone so in this video I will be
+talking about height maps so how we can
+get the grid manager to take into
+account the height of the…]]></description><link>https://gatsbystarterblogsource.gatsbyjs.io/Basics_Height/</link><guid isPermaLink="false">https://gatsbystarterblogsource.gatsbyjs.io/Basics_Height/</guid><pubDate>Sat, 28 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;hey everyone so in this video I will be
+talking about height maps so how we can
+get the grid manager to take into
+account the height of the various tiles
+and meshes placed in the grid area so if
+we check the properties of the grid
+manager and scroll down we can find this
+procedure all set up here where we have
+height map setup we can also see that
+trace four walls is set up to true as
+per the last tutorial and crisper walls
+so and you have three options here for
+height maps yeah false one level and
+multi levels so false is what I&apos;ve been
+showing in the videos till now and what
+this means is that the grid manager just
+assumes by default that every tile and
+within this range that we set up within
+12 tiles should be added to the grid as
+locations and and unless we do something
+to remove them from the grid like adding
+and a tireless that block movement to
+them or so on so at the moment we have a
+flat grid here so if we set this to one
+level or multi-level or anything then
+there will not be any changes since it&apos;s
+a flat grid right and so when you go
+from false and to one level you will see
+that this box appears around the grid
+and this box it shows the area in which
+the grid manager will attempt to look
+for tiles what is meant by tiles here
+then or any meshes or anything else that
+blocks the path trace collision channel
+so if height map is set to one level
+this means that the grid manager will
+try to trace a line trace down from the
+top of this bounding box to the bottom
+of this box and anything that it hits
+will be added as a grid location we can
+change the
+bounding box here through the max and
+minimum grid height so we can see here
+that we go from a height of a thousand
+and until a minimum grid height of zero
+it is possible to go below zero and I
+will show that later so let&apos;s see how
+this works I can add a cube again to the
+grid and resize it here and this as I&apos;ve
+said in previous tutorials if I find the
+collision the default for meshes is to
+block path trace so it should block this
+line trace that we used to set up the
+various grid locations so now that the
+height map is set to one level we should
+be able to walk on top of this tile and
+we can so that works great however if we
+choose where we set up another one which
+we make a lot taller you will see that
+we cannot move on top of this tile and
+this is because of how we have set it up
+in the procedural settings here which is
+the height in impassible cut off and
+this is the cut off in unreal units at
+which point that will get will say that
+a difference in height between two tiles
+is too great and the edge between
+between them will be removed so we can
+change this to something much higher
+like five hundred and I will change this
+as well I will talk about this shortly
+and that was not enough let&apos;s add some
+more
+hmm ah I know what is going on so this
+might be instructive so I&apos;ll leave this
+in and since we&apos;re tracing four walls
+here and we are tracing then from the
+center of a tile to the center of
+another tile and at this trace four
+walls height so it goes 100 unreal units
+above this and tries to trace to the
+center of the tile adjacent to it and
+this cuts through this corner here
+because the difference in height is so
+great so if we turned this off and then
+we are able to move on top of this but
+yeah this will really be an issue since
+I don&apos;t assume people to want to have
+this these large height differences but
+if you do in your game and you need both
+just ask me on the forums how to tweak
+it and I&apos;ll let you know but yeah for
+any reasonable height that will not be
+an issue this height difference is
+relative to the tiles that are next to
+it so if we inked and set it to 115 yeah
+then we can see so we can move into this
+tile we can&apos;t move directly down to the
+others but we can move through this
+other time there are reasons you might
+want to use height maps at one level
+even if your grid is flat and this is if
+you have sort of a sparsely populated
+grid let&apos;s see if you&apos;re making a
+dungeon or something like that
+so to set up an example actually before
+I start doing that lets let me show a
+handy trick if you go to edit and edit
+your preferences you can change the
+various grid snapping settings in the
+editor so if I go here and I search for
+grids we will find yea that there are
+decimal grid sizes here and we can add
+another one which is the size of our
+tiles which by default is 200
+so I can add one that is 200 and drag
+this into place now we should be able to
+yeah we can choose 200 I see a snap size
+here so this is useful if you&apos;re working
+on a square grid and you&apos;re placing
+actors that are not you know tiles or
+units that automatically snap or in any
+case it might be useful for exactly no
+grids you will of course not be able to
+use this feature though and but yeah so
+then we can place easily these meshes at
+the center of tiles so let&apos;s build a
+mini dungeon we will resize this a bit
+there that&apos;s nice and just make a couple
+of rooms like this
+and we can have like a path between them
+oops let&apos;s see something like this and
+now we can walk on top of them now of
+course we can still move on the rest of
+the grid here so this doesn&apos;t really do
+much but we can then disable walkability
+on this grid so if we turn off collision
+plain workable now our entire playable
+space is really within this little two
+room setup here but we can still see all
+of these tiles of course we can just
+turn off let&apos;s see yeah so default tile
+and now this is our entire playable area
+we can do some more work here maybe turn
+this into I could let the stair here and
+now we can walk up but if we go the
+other way let&apos;s see
+it might still be within the bounds okay
+if I choose all of these and I move them
+down a bit let&apos;s see you can see that
+I&apos;m not able to move down here and this
+is because these meshes now are below
+the bounds that we&apos;ve set up but we can
+always change that so if we go here to
+the minimum grid Heights I&apos;m gonna
+change this to minus 400 and now we can
+see that we can move even below the
+height that the grid manager is placed
+at we can visualize how the grid manager
+looks for tiles by going into the grid
+manager and let&apos;s see in the event graph
+here again we still have the set up grid
+arrays in the beginning and here it
+creates grid locations and here you have
+three different types depending on which
+height map we&apos;re using at the moment
+we&apos;re using one level so we can see here
+that we&apos;re tracing then from the top of
+the grid or this defined box to the
+bottom and we can display this line
+trace so that we can see it during
+gameplay
+and you can see want a trace going from
+the very top of this box here and
+looking for it until it reaches the
+bottom here if it ever hits any or
+anything that blocks path trace on the
+way it adds that grid location to the
+grid as we can see it does here what
+happens if we play something above here
+though if I take this and I drag this up
+to create like a roof and if we try
+playing now we can see that we can no
+longer move below this we have you can
+see that we can reach this by shooting
+but yet we can&apos;t move on to it because
+now these tiles are blocked by these
+measures up here so to make this work we
+need to have multi-level grids or if
+you&apos;re just using like a cosmetic roof
+so this is not supposed to be work
+walked on you can just turn off
+collision and again you&apos;ll be fine let&apos;s
+see let&apos;s turn off this trace debug
+display but say you want both of these
+to be walkable and then we reset this
+back to normal and then if we select our
+grid manager and we go to multi-level we
+will see oops nothing hmm what happened
+here oh yeah more informative mistakes
+during testing earlier I changed this
+value so let&apos;s set it back to default
+this is the height between levels so
+this is when we&apos;re generating the
+multi-level grid and any tile that it is
+found it traces our words to see if it
+has at least this space between itself
+and the roof above it so this was set
+way too high at the moment this is the
+level between the minimum level that has
+been to be between one tile and a tile
+above or below it so the default is set
+to 200 as we now try we should be able
+to move below it yeah great and it
+should also be possible now to move up
+to this level here provided we have some
+form of access so we can go to let&apos;s see
+geometry and not a stair why not and
+let&apos;s see there like this then the
+number of steps let&apos;s see yeah now we
+are able to walk to the top and we can
+walk below again
+and I can change the move of this guy to
+make it clear that we can access both at
+the same time so if we change to move to
+20 we can see it is possible to move
+both up here and to the level below a
+problem of course is that this roof area
+secluding the tiles below so it&apos;s pretty
+awkward to be able to move to these
+tiles here so there&apos;s a built-in way you
+can fix this problem if we search for a
+platform there is an actor called
+platform which turns translucent if you
+have zoomed a certain distance and this
+is a child actor that&apos;s just a larger
+platform so we can place this and move
+it up like so let&apos;s see a bit to the
+side yeah and we can see now we can move
+on top of this and if we want to move
+below we can zoom in and then we can
+access the tiles below
+we are still included though by the
+markers here on top and this also looks
+a bit weird with the stairs here so if
+you have a map where you are have X
+landed places you can stand and so on so
+these tiles don&apos;t look good on your map
+it&apos;s possible to change these markers
+for decals so you can choose the grid
+manager and it&apos;s just for decal and if
+we check Hugh&apos;s decals we can now see
+that these conform to the mesh here and
+they also disappear if you zoom through
+them so that&apos;s useful decals are also
+useful if we&apos;re using landscapes so if
+we add a landscape here just a small one
+you can use the grass texture included
+in the toolkit and create
+here&apos;s the landscape let&apos;s add some
+bumps here and there and then back into
+select mode there we are so now we have
+a landscape so like I&apos;ve said something
+that blocks paths tres doesn&apos;t need to
+be a simple static mesh it could be
+something like a landscape so if we now
+hit play we see that we can move on top
+of this landscape and the unit will move
+as appropriate on the curved landscape
+below and the reason we see the borders
+here is of course that&apos;s where we&apos;ve
+decided to find the area of the grid so
+we can increase the size of the grid
+manager to something larger so we can
+move on a larger area
+so there are a couple more options that
+I haven&apos;t mentioned if we go to the grid
+manager in the procedural options here
+so we have this Auto Edge cost based on
+height this sets the costs between
+adjacent tiles based on the height
+difference between them so that&apos;s what
+what means that they can&apos;t be moved
+between if they are a certain height
+apart but this cannot be disabled if
+it&apos;s multi level because it&apos;s that&apos;s a
+part of how my multi level grids are set
+up if it&apos;s one level or false this can
+be disabled if we want to and then
+there&apos;s this height slow increment so
+you have an impassable cutoff this is
+the height between adjacent tiles at
+which you can no longer move between
+them
+well the slow increment it decides how
+much extra movement it costs to move
+between tiles that are a certain height
+apart so if you set this to be 75 that
+means that the difference between these
+tiles is lower than 75 that the cost is
+one to move between them if it&apos;s
+Hardware between 75 150 then it is - if
+it&apos;s 150 then it&apos;s impassable if we
+increase this then it would be no 0 to
+75 it costs of 175 to 150 a cost of 250
+to 225 a cost of 3 to move between them
+and so on and so that&apos;s something I
+added when I first made this tool kit I
+don&apos;t know if many people actually use
+that function I don&apos;t know what any
+games that apply movement costs between
+tiles in that way but yeah there you
+have it in case you&apos;re the one person
+who needs that feature ok I think that
+will do it for this video thanks for
+watching&lt;/p&gt;</content:encoded></item></channel></rss>
